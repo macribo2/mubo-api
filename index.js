@@ -3,14 +3,20 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const cors = require('cors');
 
-
+//Connect to database local or remote
 // mongoose.connect('mongodb://localhost:27017/meinFlix', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require("express");
 const app = express();
+
+//prevent cors from blocking resources
 app.use(cors({ credentials: true, origin: true }));
+
+//logging with morgan
 const morgan = require('morgan');
+
+//parse url
 const bodyParser = require('body-parser'),
   methodOverride = require('method-override');
 
@@ -22,7 +28,7 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-// Get welcome message
+// default endpoint - useful for verifying app is online even if cannot yet connect to db. returns welcome message.
 app.get('/', cors(), (req, res) => {
 	res.send('Welcome to mein-api!');
   });
@@ -39,7 +45,7 @@ app.get('/movies', cors(), (req, res) => {
 			});
   });
 
-// Get a Movie by Moviename
+// Get a Movie by Movie name
 app.get('/movies/:Title', cors(), (req, res) => {
 	Movies.findOne({ Title: req.params.Title })
 	  .then((movie) => {	res.json(movie);  })
@@ -48,12 +54,13 @@ app.get('/movies/:Title', cors(), (req, res) => {
 		res.status(500).send('Error: ' + err);
 	  });
   });
-//get 
+
+  //let's see if something is broken:
 app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send('Something broke!');
   });
-// listen for requests
+// listen for requests - can't assume listening on 8080 when connecting via heroku
 const port = process.env.PORT || 8080;
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
