@@ -3,13 +3,13 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 const cors = require('cors');
 
-app.use(cors({ credentials: true, origin: true }));
 
 // mongoose.connect('mongodb://localhost:27017/meinFlix', { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require("express");
 const app = express();
+app.use(cors({ credentials: true, origin: true }));
 const morgan = require('morgan');
 const bodyParser = require('body-parser'),
   methodOverride = require('method-override');
