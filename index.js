@@ -3,10 +3,7 @@ const Models = require('./models.js');
 const Movies = Models.Movie;
 
 // mongoose.connect('mongodb://localhost:27017/meinFlix', { useNewUrlParser: true, useUnifiedTopology: true });
-// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-//myFlexDB.movies
-// mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connect('mongodb+srv://meintestuser:meinpassword1234567@cluster0.rlrbeeu.mongodb.net/myFlexDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const express = require("express");
 const app = express();
