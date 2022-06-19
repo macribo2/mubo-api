@@ -19,9 +19,14 @@ app.use(bodyParser.json());
 app.use(methodOverride());
 
 
-// Get a Movie by Moviename
+// Get welcome message
 app.get('/', (req, res) => {
 	res.send('Welcome to mein-api!');
+  });
+
+  // Get all movies
+app.get('/movies', (req, res) => {
+	res.json(movies);
   });
 
 // Get a Movie by Moviename
