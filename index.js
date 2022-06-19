@@ -20,6 +20,11 @@ app.use(methodOverride());
 
 
 // Get a Movie by Moviename
+app.get('/', (req, res) => {
+	res.send('Welcome to mein-api!');
+  });
+
+// Get a Movie by Moviename
 app.get('/movies/:Title', (req, res) => {
 	Movies.findOne({ Title: req.params.Title })
 	  .then((movie) => {	res.json(movie);  })
