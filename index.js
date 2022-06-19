@@ -23,12 +23,12 @@ app.use(methodOverride());
 
 
 // Get welcome message
-app.get('/', (req, res) => {
+app.get('/', cors(), (req, res) => {
 	res.send('Welcome to mein-api!');
   });
 
   // Get all movies
-app.get('/movies', (req, res) => {
+app.get('/movies', cors(), (req, res) => {
 	Movies.find()
 			.then((movies) => {
 				res.status(201).json(movies);
@@ -40,7 +40,7 @@ app.get('/movies', (req, res) => {
   });
 
 // Get a Movie by Moviename
-app.get('/movies/:Title', (req, res) => {
+app.get('/movies/:Title', cors(), (req, res) => {
 	Movies.findOne({ Title: req.params.Title })
 	  .then((movie) => {	res.json(movie);  })
 	  .catch((err) => {
