@@ -10,6 +10,7 @@ const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser'),
   methodOverride = require('method-override');
+  app.use(cors());
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -50,8 +51,19 @@ app.use((err, req, res, next) => {
 	console.error(err.stack);
 	res.status(500).send('Something broke!');
   });
-// listen for requests
-const port = process.env.PORT || 8080;
+
+
+  // listen for requests
+  const port = process.env.PORT || 8080;
+const { createProxyMiddleware } = require('http-proxy-middleware');
+app.use('/api', createProxyMiddleware({ 
+    target: port, 
+    changeOrigin: true, 
+    //secure: false,
+    onProxyRes: function (proxyRes, req, res) {
+       proxyRes.headers['Access-Control-Allow-Origin'] = '*';
+    }
+}));
 app.listen(port, '0.0.0.0',() => {
  console.log('Listening on Port ' + port);
 });
